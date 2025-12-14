@@ -157,6 +157,12 @@ function getRelatedDOMElement(samplerName) {
         displayname = 'Smoothing Block';
     }
 
+    if (samplerName === 'power_law') {
+        relatedDOMElement = $('#power_law_block');
+        targetDisplayType = 'block';
+        displayname = 'Power Law Block';
+    }
+
     return { relatedDOMElement, targetDisplayType, displayname };
 }
 

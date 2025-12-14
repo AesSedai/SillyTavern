@@ -74,6 +74,7 @@ const LLAMACPP_DEFAULT_ORDER = [
     'min_p',
     'xtc',
     'temperature',
+    'power_law',
 ];
 const OOBA_DEFAULT_ORDER = [
     'repetition_penalty',
@@ -228,6 +229,9 @@ export const textgenerationwebui_settings = {
     featherless_model: '',
     generic_model: '',
     extensions: {},
+    power_law: false,
+    power_law_target: 0.5,
+    power_law_decay: 0.5
 };
 
 export {
@@ -312,9 +316,13 @@ export const setting_names = [
     'generic_model',
     'extensions',
     'json_schema_allow_empty',
+    'power_law',
+    'power_law_target',
+    'power_law_decay'
 ];
 
 const DYNATEMP_BLOCK = document.getElementById('dynatemp_block_ooba');
+const POWER_LAW_BLOCK = document.getElementById('power_law_block');
 
 export function validateTextGenUrl() {
     const selector = SERVER_INPUTS[textgenerationwebui_settings.type];
@@ -978,6 +986,9 @@ export function initTextGenSettings() {
             'xtc_probability_textgenerationwebui': 0,
             'nsigma_textgenerationwebui': 0,
             'min_keep_textgenerationwebui': 0,
+            'power_law_textgenerationwebui': false,
+            'power_law_target_textgenerationwebui': 0.5,
+            'power_law_decay_textgenerationwebui': 0.5,
         };
 
         for (const [id, value] of Object.entries(inputs)) {
@@ -1483,6 +1494,11 @@ function isDynamicTemperatureSupported(settings = null) {
     return settings.dynatemp && DYNATEMP_BLOCK?.dataset?.tgType?.includes(settings.type);
 }
 
+function isPowerLawSupported(settings = null) {
+    settings = settings ?? textgenerationwebui_settings;
+    return settings.power_law && POWER_LAW_BLOCK?.dataset?.tgType?.includes(settings.type);
+}
+
 /**
  * Gets the number of logprobs to request based on the selected type.
  * @param {string} type If it's set, ignores active type
@@ -1543,6 +1559,7 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
 
     const canMultiSwipe = !isContinue && !isImpersonate && type !== 'quiet';
     const dynatemp = isDynamicTemperatureSupported(settings);
+    const powerLaw = isPowerLawSupported();
     const { banned_tokens, banned_strings } = getCustomTokenBans(settings);
     const jsonSchema = isObject(settings.json_schema)
         ? settings.json_schema_allow_empty
@@ -1614,6 +1631,9 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
         'nsigma': settings.nsigma,
         'top_n_sigma': settings.nsigma,
         'min_keep': settings.min_keep,
+        'power_law': powerLaw ? true : false,
+        'power_law_target': powerLaw ? settings.power_law_target : -1,
+        'power_law_decay': settings.power_law_decay,
         parseSequenceBreakers: function () {
             try {
                 return JSON.parse(this.dry_sequence_breakers);

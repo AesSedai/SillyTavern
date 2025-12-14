@@ -280,6 +280,9 @@ export const settingsToUpdate = {
     top_a: ['#top_a_openai', 'top_a_openai', false, false],
     min_p: ['#min_p_openai', 'min_p_openai', false, false],
     repetition_penalty: ['#repetition_penalty_openai', 'repetition_penalty_openai', false, false],
+    power_law_sampler: ['#power_law_toggle', 'power_law_sampler', true, false],
+    power_law_target: ['#power_law_target_openai', 'power_law_target_openai', false, false],
+    power_law_decay: ['#power_law_decay_openai', 'power_law_decay_openai', false, false],
     max_context_unlocked: ['#oai_max_context_unlocked', 'max_context_unlocked', true, false],
     openai_model: ['#model_openai_select', 'openai_model', false, true],
     claude_model: ['#model_claude_select', 'claude_model', false, true],
@@ -378,6 +381,9 @@ const default_settings = {
     min_p_openai: 0,
     top_a_openai: 0,
     repetition_penalty_openai: 1,
+    power_law_sampler: false,
+    power_law_target_openai: 0.5,
+    power_law_decay_openai: 0.5,
     stream_openai: false,
     openai_max_context: max_4k,
     openai_max_tokens: 300,
@@ -2596,6 +2602,9 @@ export async function createGenerationParameters(settings, model, type, messages
         generate_data['custom_include_body'] = settings.custom_include_body;
         generate_data['custom_exclude_body'] = settings.custom_exclude_body;
         generate_data['custom_include_headers'] = settings.custom_include_headers;
+        generate_data['power_law_sampler'] = oai_settings.power_law_sampler;
+        generate_data['power_law_target'] = oai_settings.power_law_sampler ? Number(oai_settings.power_law_target_openai) : -1;
+        generate_data['power_law_decay'] = Number(oai_settings.power_law_decay_openai);
     }
 
     if (settings.chat_completion_source === chat_completion_sources.COHERE) {
@@ -6206,6 +6215,23 @@ export function initOpenAI() {
     $('#repetition_penalty_openai').on('input', function () {
         oai_settings.repetition_penalty_openai = Number($(this).val());
         $('#repetition_penalty_counter_openai').val(Number($(this).val()));
+        saveSettingsDebounced();
+    });
+
+    $('#power_law_target_openai').on('input', function () {
+        oai_settings.power_law_target_openai = Number($(this).val());
+        $('#power_law_target_counter_openai').val(Number($(this).val()));
+        saveSettingsDebounced();
+    });
+
+    $('#power_law_decay_openai').on('input', function () {
+        oai_settings.power_law_decay_openai = Number($(this).val());
+        $('#power_law_decay_counter_openai').val(Number($(this).val()));
+        saveSettingsDebounced();
+    });
+
+    $('#power_law_toggle').on('change', function () {
+        oai_settings.power_law_sampler = !!$('#power_law_toggle').prop('checked');
         saveSettingsDebounced();
     });
 

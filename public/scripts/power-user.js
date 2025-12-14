@@ -680,7 +680,9 @@ async function CreateZenSliders(elmnt) {
         sliderID == 'smoothing_curve_textgenerationwebui' ||
         sliderID == 'smoothing_factor_textgenerationwebui' ||
         sliderID == 'dry_multiplier_textgenerationwebui' ||
-        sliderID == 'dry_base_textgenerationwebui') {
+        sliderID == 'dry_base_textgenerationwebui' || 
+        sliderID == 'power_law_target_textgenerationwebui' || 
+        sliderID == 'power_law_decay_textgenerationwebui') {
         decimals = 2;
     }
     if (sliderID == 'eta_cutoff_textgenerationwebui' ||
@@ -748,7 +750,9 @@ async function CreateZenSliders(elmnt) {
         sliderID == 'smoothing_curve_textgenerationwebui' ||
         sliderID == 'skew_textgenerationwebui' ||
         sliderID == 'dry_multiplier_textgenerationwebui' ||
-        sliderID == 'min_length_textgenerationwebui') {
+        sliderID == 'min_length_textgenerationwebui' ||
+        sliderID == 'power_law_target_textgenerationwebui' ||
+        sliderID == 'power_law_decay_textgenerationwebui') {
         offVal = 0;
     }
     if (sliderID == 'rep_pen_textgenerationwebui' ||

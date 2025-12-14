@@ -2079,6 +2079,22 @@ router.post('/generate', async function (request, response) {
                 bodyParams.logprobs = true;
             }
 
+            if (request.body.power_law_sampler !== undefined && request.body.power_law_sampler === true) {
+                if (request.body.power_law_sampler === true) {
+                    if (request.body.power_law_target !== undefined) {
+                        bodyParams['power_law_target'] = request.body.power_law_target;
+                    }
+
+                    if (request.body.power_law_decay !== undefined) {
+                        bodyParams['power_law_decay'] = request.body.power_law_decay;
+                    }
+                } else {
+                    bodyParams['power_law_target'] = -1;
+                }
+            } else {
+                bodyParams['power_law_target'] = -1;
+            }
+
             mergeObjectWithYaml(bodyParams, request.body.custom_include_body);
             mergeObjectWithYaml(headers, request.body.custom_include_headers);
         } else if (request.body.chat_completion_source === CHAT_COMPLETION_SOURCES.PERPLEXITY) {
