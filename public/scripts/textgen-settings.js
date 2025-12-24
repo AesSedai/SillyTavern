@@ -231,7 +231,7 @@ export const textgenerationwebui_settings = {
     extensions: {},
     power_law: false,
     power_law_target: 0.5,
-    power_law_decay: 0.5
+    power_law_decay: 0.9
 };
 
 export {
@@ -988,7 +988,7 @@ export function initTextGenSettings() {
             'min_keep_textgenerationwebui': 0,
             'power_law_textgenerationwebui': false,
             'power_law_target_textgenerationwebui': 0.5,
-            'power_law_decay_textgenerationwebui': 0.5,
+            'power_law_decay_textgenerationwebui': 0.9,
         };
 
         for (const [id, value] of Object.entries(inputs)) {
