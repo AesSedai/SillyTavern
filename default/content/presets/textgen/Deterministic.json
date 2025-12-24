@@ -80,7 +80,8 @@
         "xtc",
         "top_p",
         "min_p",
-        "temperature"
+        "temperature",
+        "power_law"
     ],
     "samplers_priorities": [
         "dry",
@@ -96,7 +97,8 @@
         "epsilon_cutoff",
         "typical_p",
         "quadratic",
-        "xtc"
+        "xtc",
+        "power_law"
     ],
     "ignore_eos_token": false,
     "spaces_between_special_tokens": true,
