@@ -117,5 +117,8 @@
     "xtc_probability": 0,
     "nsigma": 0,
     "min_keep": 0,
-    "rep_pen_size": 0
+    "rep_pen_size": 0,
+    "power_law": false,
+    "power_law_target": 0.5,
+    "power_law_decay": 0.9
 }
