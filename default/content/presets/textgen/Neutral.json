@@ -81,7 +81,7 @@
         "top_p",
         "min_p",
         "temperature",
-        "power_law"
+        "adaptive_p"
     ],
     "samplers_priorities": [
         "dry",
@@ -98,7 +98,7 @@
         "typical_p",
         "quadratic",
         "xtc",
-        "power_law"
+        "adaptive_p"
     ],
     "ignore_eos_token": false,
     "spaces_between_special_tokens": true,
@@ -118,7 +118,7 @@
     "nsigma": 0,
     "min_keep": 0,
     "rep_pen_size": 0,
-    "power_law": true,
-    "power_law_target": 0.5,
-    "power_law_decay": 0.9
+    "adaptive_p": true,
+    "adaptive_p_target": 0.5,
+    "adaptive_p_decay": 0.9
 }

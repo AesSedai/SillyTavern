@@ -157,10 +157,10 @@ function getRelatedDOMElement(samplerName) {
         displayname = 'Smoothing Block';
     }
 
-    if (samplerName === 'power_law') {
-        relatedDOMElement = $('#power_law_block');
+    if (samplerName === 'adaptive_p') {
+        relatedDOMElement = $('#adaptive_p_block');
         targetDisplayType = 'block';
-        displayname = 'Power Law Block';
+        displayname = 'Adaptive P Block';
     }
 
     return { relatedDOMElement, targetDisplayType, displayname };

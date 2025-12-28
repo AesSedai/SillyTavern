@@ -74,7 +74,7 @@ const LLAMACPP_DEFAULT_ORDER = [
     'min_p',
     'xtc',
     'temperature',
-    'power_law',
+    'adaptive_p',
 ];
 const OOBA_DEFAULT_ORDER = [
     'repetition_penalty',
@@ -229,9 +229,9 @@ export const textgenerationwebui_settings = {
     featherless_model: '',
     generic_model: '',
     extensions: {},
-    power_law: false,
-    power_law_target: 0.5,
-    power_law_decay: 0.9
+    adaptive_p: false,
+    adaptive_p_target: 0.5,
+    adaptive_p_decay: 0.9
 };
 
 export {
@@ -316,13 +316,13 @@ export const setting_names = [
     'generic_model',
     'extensions',
     'json_schema_allow_empty',
-    'power_law',
-    'power_law_target',
-    'power_law_decay'
+    'adaptive_p',
+    'adaptive_p_target',
+    'adaptive_p_decay'
 ];
 
 const DYNATEMP_BLOCK = document.getElementById('dynatemp_block_ooba');
-const POWER_LAW_BLOCK = document.getElementById('power_law_block');
+const ADAPTIVE_P_BLOCK = document.getElementById('adaptive_p_block');
 
 export function validateTextGenUrl() {
     const selector = SERVER_INPUTS[textgenerationwebui_settings.type];
@@ -986,9 +986,9 @@ export function initTextGenSettings() {
             'xtc_probability_textgenerationwebui': 0,
             'nsigma_textgenerationwebui': 0,
             'min_keep_textgenerationwebui': 0,
-            'power_law_textgenerationwebui': false,
-            'power_law_target_textgenerationwebui': 0.5,
-            'power_law_decay_textgenerationwebui': 0.9,
+            'adaptive_p_textgenerationwebui': false,
+            'adaptive_p_target_textgenerationwebui': 0.5,
+            'adaptive_p_decay_textgenerationwebui': 0.9,
         };
 
         for (const [id, value] of Object.entries(inputs)) {
@@ -1494,9 +1494,9 @@ function isDynamicTemperatureSupported(settings = null) {
     return settings.dynatemp && DYNATEMP_BLOCK?.dataset?.tgType?.includes(settings.type);
 }
 
-function isPowerLawSupported(settings = null) {
+function isAdaptivePSupported(settings = null) {
     settings = settings ?? textgenerationwebui_settings;
-    return settings.power_law && POWER_LAW_BLOCK?.dataset?.tgType?.includes(settings.type);
+    return settings.adaptive_p && ADAPTIVE_P_BLOCK?.dataset?.tgType?.includes(settings.type);
 }
 
 /**
@@ -1559,7 +1559,7 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
 
     const canMultiSwipe = !isContinue && !isImpersonate && type !== 'quiet';
     const dynatemp = isDynamicTemperatureSupported(settings);
-    const powerLaw = isPowerLawSupported();
+    const adaptiveP = isAdaptivePSupported();
     const { banned_tokens, banned_strings } = getCustomTokenBans(settings);
     const jsonSchema = isObject(settings.json_schema)
         ? settings.json_schema_allow_empty
@@ -1631,9 +1631,9 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
         'nsigma': settings.nsigma,
         'top_n_sigma': settings.nsigma,
         'min_keep': settings.min_keep,
-        'power_law': powerLaw ? true : false,
-        'power_law_target': powerLaw ? settings.power_law_target : -1,
-        'power_law_decay': settings.power_law_decay,
+        'adaptive_p': adaptiveP ? true : false,
+        'adaptive_p_target': adaptiveP ? settings.adaptive_p_target : -1,
+        'adaptive_p_decay': settings.adaptive_p_decay,
         parseSequenceBreakers: function () {
             try {
                 return JSON.parse(this.dry_sequence_breakers);
