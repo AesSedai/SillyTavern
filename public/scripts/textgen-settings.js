@@ -230,8 +230,8 @@ export const textgenerationwebui_settings = {
     generic_model: '',
     extensions: {},
     adaptive_p: false,
-    adaptive_p_target: 0.5,
-    adaptive_p_decay: 0.9
+    adaptive_target: 0.5,
+    adaptive_decay: 0.9
 };
 
 export {
@@ -317,8 +317,8 @@ export const setting_names = [
     'extensions',
     'json_schema_allow_empty',
     'adaptive_p',
-    'adaptive_p_target',
-    'adaptive_p_decay'
+    'adaptive_target',
+    'adaptive_decay'
 ];
 
 const DYNATEMP_BLOCK = document.getElementById('dynatemp_block_ooba');
@@ -987,8 +987,8 @@ export function initTextGenSettings() {
             'nsigma_textgenerationwebui': 0,
             'min_keep_textgenerationwebui': 0,
             'adaptive_p_textgenerationwebui': false,
-            'adaptive_p_target_textgenerationwebui': 0.5,
-            'adaptive_p_decay_textgenerationwebui': 0.9,
+            'adaptive_target_textgenerationwebui': 0.5,
+            'adaptive_decay_textgenerationwebui': 0.9,
         };
 
         for (const [id, value] of Object.entries(inputs)) {
@@ -1632,8 +1632,8 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
         'top_n_sigma': settings.nsigma,
         'min_keep': settings.min_keep,
         'adaptive_p': adaptiveP ? true : false,
-        'adaptive_p_target': adaptiveP ? settings.adaptive_p_target : -1,
-        'adaptive_p_decay': settings.adaptive_p_decay,
+        'adaptive_target': adaptiveP ? settings.adaptive_target : -1,
+        'adaptive_decay': settings.adaptive_decay,
         parseSequenceBreakers: function () {
             try {
                 return JSON.parse(this.dry_sequence_breakers);

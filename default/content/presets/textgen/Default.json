@@ -119,6 +119,6 @@
     "min_keep": 0,
     "rep_pen_size": 0,
     "adaptive_p": true,
-    "adaptive_p_target": 0.5,
-    "adaptive_p_decay": 0.9
+    "adaptive_target": 0.5,
+    "adaptive_decay": 0.9
 }
